@@ -12,7 +12,6 @@ default(
       *.cpp *.c *.hpp *.h
 )
 default(FIX NO)
-message("PATTERNS: ${PATTERNS}")
 
 set(flag --output-replacements-xml)
 set(args OUTPUT_VARIABLE output)
@@ -25,8 +24,6 @@ file(GLOB_RECURSE files ${PATTERNS})
 set(badly_formatted "")
 set(output "")
 string(LENGTH "${CMAKE_SOURCE_DIR}/" path_prefix_length)
-
-message("FILES: ${files}")
 
 foreach(file IN LISTS files)
   execute_process(
