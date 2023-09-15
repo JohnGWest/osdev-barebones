@@ -3,8 +3,6 @@
 
 #include <stddef.h>
 
-#include "terminal_lib.h"
-
 size_t boot_strlen(const char* str)
 {
   size_t len = 0;
@@ -12,11 +10,13 @@ size_t boot_strlen(const char* str)
   return len;
 }
 
-void boot_memcpy(void *restrict destination, const void *restrict source, size_t num)
+void boot_memcpy(void* restrict destination,
+                 const void* restrict source,
+                 size_t num)
 {
   for (size_t i = 0; i < num; ++i)
   {
-    ((char *)destination)[i] = ((const char *)source)[i];
+    ((char*)destination)[i] = ((const char*)source)[i];
   }
 }
 

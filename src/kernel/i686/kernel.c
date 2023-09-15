@@ -15,11 +15,6 @@
 #error "This tutorial needs to be compiled with a ix86-elf compiler"
 #endif
 
-
-
-/* Hardware text mode color constants. */
-
-
 void kernel_main(void)
 {
   /* Initialize terminal interface */
@@ -30,7 +25,6 @@ void kernel_main(void)
   terminal_writestring("Testing\n");
   terminal_writestring("          1234567890\n");
   terminal_writesize(256);
-  
   size_t i = 0;
   // while (1)
   // {

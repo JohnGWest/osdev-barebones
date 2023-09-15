@@ -1,7 +1,7 @@
 #include "terminal_lib.h"
 
-#include <stdint.h>
 #include <stddef.h>
+#include <stdint.h>
 
 #include "boot_lib.h"
 
@@ -52,14 +52,13 @@ void terminal_putentryat(char c, uint8_t color, size_t x, size_t y)
 void terminal_scroll(void)
 {
   size_t most_lines = VGA_WIDTH * VGA_HEIGHT - VGA_WIDTH;
-  boot_memcpy(terminal_buffer, terminal_buffer + VGA_WIDTH, most_lines * sizeof(uint16_t));
+  boot_memcpy(terminal_buffer, terminal_buffer + VGA_WIDTH,
+              most_lines * sizeof(uint16_t));
   for (size_t i = 0; i < VGA_WIDTH; ++i)
   {
     terminal_putentryat(' ', terminal_color, i, VGA_HEIGHT - 1);
   }
 }
-
-
 
 void terminal_putchar(char c)
 {
@@ -86,7 +85,6 @@ void terminal_writestring(const char* data)
 
 void terminal_writesize(size_t n)
 {
-
   char buff[22];
   for (size_t i = 0; i < 21; ++i)
   {

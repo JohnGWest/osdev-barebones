@@ -1,8 +1,8 @@
 #ifndef TERMINAL_LIB_H
 #define TERMINAL_LIB_H
 
-#include <stdint.h>
 #include <stddef.h>
+#include <stdint.h>
 
 enum vga_color
 {
@@ -33,4 +33,4 @@ void terminal_write(const char* data, size_t size);
 void terminal_writestring(const char* data);
 void terminal_writesize(size_t n);
 
-#endif // TERMINAL_LIB_H
+#endif  // TERMINAL_LIB_H
