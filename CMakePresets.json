@@ -1,0 +1,139 @@
+{
+  "version": 3,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 21,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "cmake-pedantic",
+      "description": "Enable CMake pedantic error and warning checking.",
+      "hidden": true,
+      "warnings": {
+        "dev": true,
+        "deprecated": true,
+        "uninitialized": true,
+        "unusedCli": true,
+        "systemVars": false
+      },
+      "errors": {
+        "dev": false,
+        "deprecated": true
+      }
+    },
+    {
+      "name": "docs-gen",
+      "description": "Use documentation generator.",
+      "hidden": true,
+      "cacheVariables": {
+        "KERNEL_ENABLE_DOCS": "ON"
+      }
+    },
+    {
+      "name": "clang-format",
+      "description": "Use clang-format formatting tool.",
+      "hidden": true,
+      "cacheVariables": {
+        "KERNEL_ENABLE_FORMAT": "ON"
+      }
+    },
+    {
+      "name": "spell-check",
+      "description": "Use codespell spell-checking tool.",
+      "hidden": true,
+      "cacheVariables": {
+        "KERNEL_ENABLE_SPELLCHECK": "ON"
+      }
+    },
+    {
+      "name": "cppcheck",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_CXX_CPPCHECK": "cppcheck;--inline-suppr",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+      }
+    },
+    {
+      "name": "clang-tidy",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_CXX_CLANG_TIDY": "clang-tidy;--header-filter=${sourceDir}/*",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+      }
+    },
+    {
+      "name": "iwyu",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_CXX_INCLUDE_WHAT_YOU_USE": "iwyu",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+      }
+    },
+    {
+      "name": "warnings-unix",
+      "description": "Compiler warning flags for gcc + clang.",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_CXX_FLAGS": "-Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wcast-qual -Wshadow -Wformat=2 -Wundef -Werror=float-equal"
+      }
+    },
+    {
+      "name": "cmake-gen-make",
+      "description": "Build using Unix Makefiles.",
+      "hidden": true,
+      "generator": "Unix Makefiles"
+    },
+    {
+      "name": "cmake-gen-ninja",
+      "description": "Build using Ninja.",
+      "hidden": true,
+      "generator": "Ninja"
+    },
+    {
+      "name": "cmake-gen-ninja-multi",
+      "description": "Build using Ninja Multi-Config.",
+      "hidden": true,
+      "generator": "Ninja Multi-Config"
+    },
+    {
+      "name": "build-default",
+      "description": "Continuous integration settings for setting up build directories.",
+      "binaryDir": "${sourceDir}/build",
+      "hidden": true
+    },
+    {
+      "name": "target-clang-i686-none-elf",
+      "description": "Cross compile for clang-i686-none-elf",
+      "toolchainFile": "${sourceDir}/tools/cmake/toolchains/clang-i686-none-elf.cmake"
+    },
+    {
+      "name": "default-clang",
+      "description": "Development configure presets for clang",
+      "inherits": [
+        "cmake-pedantic",
+        "target-clang-i686-none-elf",
+        "cmake-gen-ninja",
+        "build-default", 
+        "clang-format", 
+        "spell-check",
+        "warnings-unix"
+      ]
+    },
+    {
+      "name": "dev-clang",
+      "description": "Development configure presets for clang",
+      "inherits": [
+        "cmake-pedantic",
+        "target-clang-i686-none-elf",
+        "cmake-gen-ninja",
+        "build-default", 
+        "clang-format", 
+        "spell-check",
+        "cppcheck",
+        "clang-tidy",
+        "warnings-unix"
+      ]
+    }
+  ]
+}
