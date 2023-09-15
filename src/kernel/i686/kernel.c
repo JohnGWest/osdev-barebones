@@ -1,5 +1,6 @@
 
 #include <stddef.h>
+#include <stdint.h>
 
 #include "boot_lib.h"
 #include "terminal_lib.h"
@@ -20,14 +21,16 @@ void kernel_main(void)
   /* Initialize terminal interface */
   terminal_initialize();
 
-  /* Newline support is left as an exercise. */
-  terminal_writestring("Hello, kernel World!\n");
-  terminal_writestring("Testing\n");
-  terminal_writestring("          1234567890\n");
-  terminal_writesize(256);
-  size_t i = 0;
-  // while (1)
-  // {
-  //   terminal_writesize(i++);
-  // }
+  terminal_write_string("0123456789");
+  terminal_write_string("0123456789");
+  terminal_write_string("0123456789");
+  terminal_write_string("0123456789");
+  terminal_write_string("0123456789");
+  terminal_write_string("0123456789");
+  terminal_write_string("0123456789");
+  terminal_write_string("0123456789");
+  terminal_write_string("0123456789\n");
+  terminal_write_uint32(25565);
+  terminal_write_string("Testing negative number display!!!");
+  terminal_write_int32(-25565);
 }

@@ -7,6 +7,8 @@ size_t boot_strlen(const char* str);
 void boot_memcpy(void* restrict destination,
                  const void* restrict source,
                  size_t num);
-void size_t_to_str(size_t n, char* buff, size_t buff_size);
+void boot_volatile_memcpy(volatile void* restrict destination,
+          volatile const void* restrict source,
+          size_t num);
 
 #endif  // BOOT_LIB_H

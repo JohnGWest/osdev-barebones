@@ -4,6 +4,10 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#define SIZE_STRING_MAX (11)
+#define UINT32_STRING_MAX (11)
+#define INT32_STRING_MAX (12)
+
 enum vga_color
 {
   VGA_COLOR_BLACK = 0,
@@ -30,7 +34,9 @@ void terminal_putentryat(char c, uint8_t color, size_t x, size_t y);
 void terminal_scroll(void);
 void terminal_putchar(char c);
 void terminal_write(const char* data, size_t size);
-void terminal_writestring(const char* data);
-void terminal_writesize(size_t n);
+void terminal_write_string(const char* data);
+void terminal_write_size(size_t n);
+void terminal_write_uint32(uint32_t n);
+void terminal_write_int32(int32_t n);
 
 #endif  // TERMINAL_LIB_H

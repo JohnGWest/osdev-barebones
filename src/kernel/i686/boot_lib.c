@@ -20,19 +20,12 @@ void boot_memcpy(void* restrict destination,
   }
 }
 
-void size_t_to_str(size_t n, char* buff, size_t buff_size)
+void boot_volatile_memcpy(volatile void* restrict destination,
+                 volatile const void* restrict source,
+                 size_t num)
 {
-  for (size_t i = 0; i < buff_size; ++i)
+  for (size_t i = 0; i < num; ++i)
   {
-    if (n > 0)
-    {
-      buff[buff_size - i - 1] = n % 10 + '0';
-    }
-    else
-    {
-      buff[buff_size - i - 1] = ' ';
-    }
-
-    n /= 10;
+    ((char*)destination)[i] = ((const char*)source)[i];
   }
 }

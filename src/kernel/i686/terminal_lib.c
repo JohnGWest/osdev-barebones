@@ -4,6 +4,7 @@
 #include <stdint.h>
 
 #include "boot_lib.h"
+#include "string_lib.h"
 
 static uint8_t vga_entry_color(enum vga_color fg, enum vga_color bg)
 {
@@ -52,7 +53,7 @@ void terminal_putentryat(char c, uint8_t color, size_t x, size_t y)
 void terminal_scroll(void)
 {
   size_t most_lines = VGA_WIDTH * VGA_HEIGHT - VGA_WIDTH;
-  boot_memcpy(terminal_buffer, terminal_buffer + VGA_WIDTH,
+  boot_volatile_memcpy(terminal_buffer, terminal_buffer + VGA_WIDTH,
               most_lines * sizeof(uint16_t));
   for (size_t i = 0; i < VGA_WIDTH; ++i)
   {
@@ -62,7 +63,7 @@ void terminal_scroll(void)
 
 void terminal_putchar(char c)
 {
-  if (c == '\n' || terminal_column++ == VGA_WIDTH)
+  if (c == '\n')
   {
     terminal_scroll();
     terminal_column = 0;
@@ -70,6 +71,11 @@ void terminal_putchar(char c)
   else
   {
     terminal_putentryat(c, terminal_color, terminal_column, terminal_row);
+    if (++terminal_column == VGA_WIDTH)
+    {
+      terminal_column = 0;
+      terminal_scroll();
+    }
   }
 }
 
@@ -78,20 +84,49 @@ void terminal_write(const char* data, size_t size)
   for (size_t i = 0; i < size; i++) terminal_putchar(data[i]);
 }
 
-void terminal_writestring(const char* data)
+void terminal_write_string(const char* data)
 {
   terminal_write(data, boot_strlen(data));
 }
 
-void terminal_writesize(size_t n)
+void terminal_write_size(size_t n)
 {
-  char buff[22];
-  for (size_t i = 0; i < 21; ++i)
+  char buf[SIZE_STRING_MAX];
+  for (size_t i = 0; i < SIZE_STRING_MAX - 1; ++i)
   {
-    buff[i] = ' ';
+    buf[i] = ' ';
   }
-  buff[20] = '\n';
-  buff[21] = '\0';
-  size_t_to_str(n, buff, 20);
-  terminal_writestring(buff);
+  buf[SIZE_STRING_MAX - 1] = '\0';
+  size_to_str(n, buf, SIZE_STRING_MAX - 1);
+  size_t start;
+  for (start = 0; buf[start] == ' ' && start < SIZE_STRING_MAX; ++start);
+  terminal_write_string(buf + start);
+}
+
+void terminal_write_uint32(uint32_t n)
+{
+  char buf[UINT32_STRING_MAX];
+  for (size_t i = 0; i < UINT32_STRING_MAX - 1; ++i)
+  {
+    buf[i] = ' ';
+  }
+  buf[UINT32_STRING_MAX - 1] = '\0';
+  uint32_to_str(n, buf, UINT32_STRING_MAX - 1);
+  size_t start;
+  for (start = 0; buf[start] == ' ' && start < UINT32_STRING_MAX; ++start);
+  terminal_write_string(buf + start);
+}
+
+void terminal_write_int32(int32_t n)
+{
+  char buf[INT32_STRING_MAX];
+  for (size_t i = 0; i < INT32_STRING_MAX - 1; ++i)
+  {
+    buf[i] = ' ';
+  }
+  buf[INT32_STRING_MAX - 1] = '\0';
+  int32_to_str(n, buf, INT32_STRING_MAX - 1);
+  size_t start;
+  for (start = 0; buf[start] == ' ' && start < INT32_STRING_MAX; ++start);
+  terminal_write_string(buf + start);
 }
