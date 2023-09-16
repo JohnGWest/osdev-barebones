@@ -6,7 +6,10 @@
 size_t boot_strlen(const char* str)
 {
   size_t len = 0;
-  while (str[len]) len++;
+  while (str[len])
+  { 
+    len++;
+  } 
   return len;
 }
 
@@ -20,19 +23,20 @@ void boot_memcpy(void* restrict destination,
   }
 }
 
-void size_t_to_str(size_t n, char* buff, size_t buff_size)
+void size_t_to_str(size_t n, char* buffer, size_t buf_size)
 {
-  for (size_t i = 0; i < buff_size; ++i)
+  const size_t radix = 10;
+  for (size_t i = 0ULL; i < buf_size; ++i)
   {
     if (n > 0)
     {
-      buff[buff_size - i - 1] = n % 10 + '0';
+      buffer[buf_size - i - 1] = (char)(n % radix) + '0';
     }
     else
     {
-      buff[buff_size - i - 1] = ' ';
+      buffer[buf_size - i - 1] = ' ';
     }
 
-    n /= 10;
+    n /= radix;
   }
 }
