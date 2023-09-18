@@ -50,7 +50,8 @@
       "name": "cppcheck",
       "hidden": true,
       "cacheVariables": {
-        "CMAKE_CXX_CPPCHECK": "cppcheck;--inline-suppr",
+        "CMAKE_CXX_CPPCHECK": "cppcheck;--inline-suppr;--enable=all",
+        "CMAKE_C_CPPCHECK": "cppcheck;--inline-suppr;--enable=all",
         "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
       }
     },
@@ -59,6 +60,7 @@
       "hidden": true,
       "cacheVariables": {
         "CMAKE_CXX_CLANG_TIDY": "clang-tidy;--header-filter=${sourceDir}/*",
+        "CMAKE_C_CLANG_TIDY": "clang-tidy;--header-filter=${sourceDir}/*",
         "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
       }
     },
@@ -67,6 +69,7 @@
       "hidden": true,
       "cacheVariables": {
         "CMAKE_CXX_INCLUDE_WHAT_YOU_USE": "iwyu",
+        "CMAKE_C_INCLUDE_WHAT_YOU_USE": "iwyu",
         "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
       }
     },
@@ -104,11 +107,18 @@
     },
     {
       "name": "target-clang-i686-none-elf",
+      "hidden": true,
       "description": "Cross compile for clang-i686-none-elf",
       "toolchainFile": "${sourceDir}/tools/cmake/toolchains/clang-i686-none-elf.cmake"
     },
     {
-      "name": "default-clang",
+      "name": "target-clang-aarch64-none-elf",
+      "hidden": true,
+      "description": "Cross compile for clang-aarch64-none-elf",
+      "toolchainFile": "${sourceDir}/tools/cmake/toolchains/clang-aarch64-none-elf.cmake"
+    },
+    {
+      "name": "ci-clang-i686",
       "description": "Development configure presets for clang",
       "inherits": [
         "cmake-pedantic",
@@ -121,17 +131,15 @@
       ]
     },
     {
-      "name": "dev-clang",
+      "name": "ci-clang-aarch64",
       "description": "Development configure presets for clang",
       "inherits": [
         "cmake-pedantic",
-        "target-clang-i686-none-elf",
+        "target-clang-aarch64-none-elf",
         "cmake-gen-ninja",
         "build-default", 
         "clang-format", 
         "spell-check",
-        "cppcheck",
-        "clang-tidy",
         "warnings-unix"
       ]
     }

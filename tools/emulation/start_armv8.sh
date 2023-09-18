@@ -1,0 +1,1 @@
+qemu-system-aarch64 -machine virt -cpu cortex-a57 -kernel $1 -nographic

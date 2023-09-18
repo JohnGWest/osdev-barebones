@@ -20,14 +20,9 @@ void kernel_main(void)
   /* Initialize terminal interface */
   terminal_initialize();
 
-  /* Newline support is left as an exercise. */
   terminal_writestring("Hello, kernel World!\n");
   terminal_writestring("Testing\n");
   terminal_writestring("          1234567890\n");
   terminal_writesize(256);
   size_t i = 0;
-  // while (1)
-  // {
-  //   terminal_writesize(i++);
-  // }
 }
